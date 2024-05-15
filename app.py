@@ -28,5 +28,6 @@ else:
     #st.write(score)
     string = "This image most likely a {} with a {:.2f}% confidence.".format(columns[np.argmax(score)], 100 * np.max(score))
     st.success(string)
-    else:
+  
+else:
         st.write("improper image or no image uploaded")
