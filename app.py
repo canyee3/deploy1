@@ -9,8 +9,6 @@ from PIL import Image, ImageOps
 
 @st.cache(allow_output_mutation=True)
 
-model = tf.keras.models.load_model('best_model.keras')
-
 def import_and_predict(image_data, model):
         size = (300,300)  
         image = ImageOps.fit(image_data, size)
@@ -23,6 +21,7 @@ def import_and_predict(image_data, model):
         prediction = model.predict(img)
         return prediction
 
+model = tf.keras.models.load_model('best_model.keras')
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
