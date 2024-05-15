@@ -4,8 +4,6 @@ numpy
 pandas
 pillow
 opencv-python-headless
-tensorflow
-keras
-tensorflow -cpu
+tensorflow == 2.15.0
 opencv-python-headless
 rembg
