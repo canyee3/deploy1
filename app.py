@@ -1,54 +1,27 @@
-import streamlit as st
-import tensorflow as tf
+from PIL import Image
 import streamlit as st
 import cv2
-import glob
-from PIL import Image, ImageOps
+#import urllib.request
 import numpy as np
 
-@st.cache(allow_output_mutation=True)
-def load_model():
-  model=tf.keras.models.load_model('best_model.keras')
-  return model
+st.title("Image Classification of select fruits and vegetables")
+st.header("only orange,banana,apple,tomato,bitter guard, capsicum allowed at present")
+st.text("Upload a clear image of fruit or vegetable ")
+from image_classification import machine_classification 
+uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
 
-def import_and_predict(image_data, model):
-        size = (300,300)  
-        image = ImageOps.fit(image_data, size)
-        image = np.asarray(image, dtype = 'float32')
-        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
-        img = img / 255
-        #img_resize = (cv2.resize(img, dsize=(75, 75),    interpolation=cv2.INTER_CUBIC))/255.
-        #img_reshape = img[np.newaxis,...]
-        prediction = model.predict(img)
-        return prediction
 
-columns = ['apples', 'tomatoes']
-with st.spinner('Model is being loaded..'):
-  model=load_model()
-
-st.write("Emerging Technologies 2 by Pagatpat, Paul Gabriel and Dalangan, Katherine May")
-display_images()
-st.write("""
-         # Intel Image Classification
-         \nA demonstration on a Predictive Convolutional Neural Network with a 66% accuracy that uses
-         images of natural scenes from a Datahack challenge by Intel.
-         """
-         )
-
-file = st.file_uploader("Upload images that either classify as an image of a mountain, street, glacier, building, sea, or a forest (PNG or JPG only)", type=["jpg", "png"])
-st.set_option('deprecation.showfileUploaderEncoding', False)
-if file is None:
-    st.text("Please upload an image file")
-else:
-    size = (300,300)  
-    image = Image.open(file)
-    image = ImageOps.fit(image, size)
-    st.image(image, width = image.size[0]*2)
-    prediction = import_and_predict(image, model)
-    #prediction = model.predict(image)
-    score = tf.nn.softmax(prediction[0])
-    #st.write(prediction)
-    #st.write(score)
-    string = "This image most likely a {} with a {:.2f}% confidence.".format(columns[np.argmax(score)], 100 * np.max(score))
-    st.success(string)
+if uploaded_file is not None:
+    
+    image = Image.open(uploaded_file)
+    
+    st.image(image, caption='Uploaded image', use_column_width=True)
+    st.write("")
+    st.write("Classifying...")
+    label = machine_classification(image, 'ml_model.h5')
+    if label>=0 and label<=5:
+        st.write("The uploaded item is fresh")
+    elif label>=6 and label<=11:
+        st.write("The uploaded item is rotten")
+    else:
+        st.write("improper image or no image uploaded")
