@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-  model = load_model('best_model.keras')
+  model=tf.keras.models.load_model('best_model.keras')
   return model
 
 def import_and_predict(image_data, model):
