@@ -5,3 +5,7 @@ pandas
 pillow
 opencv-python-headless
 tensorflow
+keras
+tensorflow -cpu
+opencv-python-headless
+rembg
