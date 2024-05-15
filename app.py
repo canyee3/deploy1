@@ -23,16 +23,6 @@ def import_and_predict(image_data, model):
         prediction = model.predict(img)
         return prediction
 
-def display_images():
-  images = [Image.open(file) for file in glob.glob("display/*.jpg")]
-  row_size = len(images)
-  grid = st.columns(row_size)
-  col = 0
-  for image in images:
-      with grid[col]:
-          st.image(image)
-      col = (col + 1) % row_size
-
 columns = ['apples', 'tomatoes']
 with st.spinner('Model is being loaded..'):
   model=load_model()
