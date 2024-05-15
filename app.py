@@ -4,23 +4,27 @@ import cv2
 #import urllib.request
 import numpy as np
 
+label = machine_classification(image, 'best_models.keras')
+
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
 from image_classification import machine_classification 
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
 
-
-if uploaded_file is not None:
-    
+    if file is None:
+    st.text("Please upload an image file")
+        
+else:
+    size = (300,300) 
     image = Image.open(uploaded_file)
-    
-    st.image(image, caption='Uploaded image', use_column_width=True)
-    st.write("")
-    st.write("Classifying...")
-    label = machine_classification(image, 'best_models.keras')
-    if label>=0 and label<=5:
-        st.write("The uploaded item is fresh")
-    elif label>=6 and label<=11:
-        st.write("The uploaded item is rotten")
+    image = ImageOps.fit(image, size)
+    st.image(image, width = image.size[0]*2)
+    prediction = import_and_predict(image, model)
+    #prediction = model.predict(image)
+    score = tf.nn.softmax(prediction[0])
+    #st.write(prediction)
+    #st.write(score)
+    string = "This image most likely a {} with a {:.2f}% confidence.".format(columns[np.argmax(score)], 100 * np.max(score))
+    st.success(string)
     else:
         st.write("improper image or no image uploaded")
