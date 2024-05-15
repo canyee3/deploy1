@@ -12,6 +12,18 @@ def load_model():
   model=tf.keras.models.load_model('best_model.keras')
   return model
 
+def import_and_predict(image_data, model):
+        size = (150,150)  
+        image = ImageOps.fit(image_data, size)
+        image = np.asarray(image, dtype = 'float32')
+        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
+        img = img / 255
+        #img_resize = (cv2.resize(img, dsize=(75, 75),    interpolation=cv2.INTER_CUBIC))/255.
+        #img_reshape = img[np.newaxis,...]
+        prediction = model.predict(img)
+        return prediction
+
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
