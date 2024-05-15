@@ -4,7 +4,10 @@ import cv2
 #import urllib.request
 import numpy as np
 
-label = machine_classification(image, 'best_models.keras')
+@st.cache(allow_output_mutation=True)
+def load_model():
+  model=tf.keras.models.load_model('best_model.keras')
+  return model
 
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
