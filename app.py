@@ -13,7 +13,7 @@ st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
 
-if file is None:
+if uploaded_file is None:
     st.text("Please upload an image file")
         
 else:
