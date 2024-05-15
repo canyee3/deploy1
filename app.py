@@ -8,7 +8,6 @@ label = machine_classification(image, 'best_models.keras')
 
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
-from image_classification import machine_classification 
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
 
     if file is None:
