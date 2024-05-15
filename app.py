@@ -21,7 +21,7 @@ def import_and_predict(image_data, model):
         prediction = model.predict(img)
         return prediction
 
-model = tf.keras.models.load_model('best_model.keras')
+model = tf.keras.models.load_model('final_model.hdf5')
 st.title("Image Classification of Apples and Tomatoes")
 st.text("Upload a clear image of an apple or a tomato :>")
 uploaded_file = st.file_uploader("Enter image", type=["png","jpeg","jpg"])
