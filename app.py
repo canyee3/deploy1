@@ -8,9 +8,7 @@ import glob
 from PIL import Image, ImageOps
 
 @st.cache(allow_output_mutation=True)
-def load_model():
-  model=tf.keras.models.load_model('best_model.keras')
-  return model
+model=tf.keras.models.load_model('best_model.keras')
 
 def import_and_predict(image_data, model):
         size = (150,150)  
