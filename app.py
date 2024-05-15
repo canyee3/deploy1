@@ -1,9 +1,9 @@
 from PIL import Image
+import tensorflow as tf
 import streamlit as st
 import cv2
 #import urllib.request
 import numpy as np
-import tensorflow as tf
 import glob
 from PIL import Image, ImageOps
 
@@ -12,7 +12,7 @@ from PIL import Image, ImageOps
 model = tf.keras.models.load_model('best_model.keras')
 
 def import_and_predict(image_data, model):
-        size = (150,150)  
+        size = (300,300)  
         image = ImageOps.fit(image_data, size)
         image = np.asarray(image, dtype = 'float32')
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
